@@ -1,0 +1,250 @@
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap");
+
+  h2 {
+    font-weight: 300;
+  }
+
+  b {
+    font-weight: 700;
+  }
+
+  .container {
+    width: 210mm;
+    min-height: 290mm;
+    padding: 3rem 4rem;
+    margin: 0 auto;
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 1.8;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .logo {
+    fill: #e2e2e2;
+    width: 80px;
+  }
+
+  .columns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .flex-end {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .text-xs {
+    font-size: 0.7em;
+  }
+
+  .text-sm {
+    font-size: 0.9em;
+  }
+
+  .text-lg {
+    font-size: 1.5em;
+  }
+
+  .text-left {
+    text-align: left;
+  }
+
+  .text-right {
+    text-align: right;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .light {
+    color: #ccc;
+  }
+
+  .title {
+    font-size: 2em;
+    margin-bottom: 0;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 1em;
+    border-bottom: 1px #ccc solid;
+    line-height: 1.8;
+  }
+
+  th {
+    border-bottom: 1px #ccc solid;
+    padding: 0.75em 0;
+  }
+
+  td {
+    padding: 0.75em 0;
+    margin: 0;
+    white-space: nowrap;
+    vertical-align: text-top;
+  }
+
+  .totals {
+    max-width: 50%;
+  }
+
+  .totals,
+  .totals th,
+  .totals td {
+    border: 0;
+    padding: 0;
+  }
+
+  .m-auto {
+    margin: 0 auto;
+  }
+
+  .mt {
+    margin-top: 1.25em;
+  }
+
+  .mt-0 {
+    margin-top: 0;
+  }
+
+  .mt-sm {
+    margin-top: 0.5em;
+  }
+
+  .mt-lg {
+    margin-top: 2em;
+  }
+
+  .mt-xl {
+    margin-top: 3.25em;
+  }
+
+  .footer {
+    font-size: 0.6em;
+  }
+
+  .width-70 {
+    max-width: 70%;
+  }
+</style>
+
+<div class="container">
+  <div>
+    <div class="columns">
+      <div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 276.34 228.07"
+          class="logo"
+        >
+          <path
+            d="M0,221.84q21-1.68,26.09-7.49t5.05-27.68V37.37q0-18.69-5.64-24.16T0,6.4V0H98.3V6.4q-20.2,1-26.09,6.73T66.32,37.37v70.69q31.82-27.11,52-46.12,36.18-34.5,36.19-44.27,0-6.9-6.15-9.09T131,6.4V0h90.22V5.55q-16.5,1.69-26,6.57T168.82,33.5L103.35,97.63l80.29,86.68q22.38,24.08,30.46,30t23.74,7.83v5.89H132.47v-6.23q14.31-.5,19.35-2.27t5.05-7q0-2.86-3.28-8.76a77,77,0,0,0-10.35-13.63L77.93,118.5l-11.61,9.93v62.28q0,19.18,5.8,24.32t25.34,6.81v6.23H0Z"
+          />
+          <path
+            d="M276.34,6.23q-21,1.68-26.09,7.49T245.2,41.41v149.3q0,18.67,5.63,24.15t25.51,6.82v6.39H178v-6.39q20.19-1,26.09-6.74T210,190.71V120q-31.82,27.11-52,46.12-36.19,34.5-36.19,44.27,0,6.9,6.14,9.09t17.42,2.19v6.39H55.16v-5.55q16.5-1.68,26-6.57t26.34-21.37L173,130.45,92.7,43.76q-22.4-24.06-30.47-30T38.5,5.89V0H143.87V6.23q-14.31.49-19.36,2.27a6.84,6.84,0,0,0-5.05,7q0,2.85,3.28,8.75A76.25,76.25,0,0,0,133.1,37.87l65.3,71.71L210,99.65V37.37q0-19.2-5.81-24.33T178.88,6.23V0h97.46Z"
+          />
+        </svg>
+        <h1 class="title mt-xl">{{client.company}}</h1>
+        <p class="mt-sm text-sm">
+          t.a.v. {{client.contact}}<br />
+          {{client.address}}<br />
+          {{client.zipcode}} {{client.city}}<br />
+        </p>
+      </div>
+
+      <div class="text-right">
+        <h1 class="mt-0">
+          FACTUUR <span class="light">|</span> {{invoiceNumber}}
+        </h1>
+        <p class="text-sm">
+          {{company.name}}<br />
+          {{company.address}}<br />
+          {{company.zipcode}} {{company.city}}<br />
+        </p>
+        <p class="mt text-sm">
+          e <span class="light">|</span> {{company.email}}<br />
+          m <span class="light">|</span> {{company.phone}}
+        </p>
+
+        <p class="mt text-sm">
+          IBAN <span class="light">|</span> {{company.iban}}<br />
+          BTW <span class="light">|</span> {{company.vat}}<br />
+          KvK <span class="light">|</span> {{company.coc}}
+        </p>
+      </div>
+    </div>
+    <div class="columns mt-lg">
+      <p><b>FACTUUR</b> {{invoiceNumber}}</p>
+      <p><b>Datum</b> {{date}}</p>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th class="text-left">BESCHRIJVING</th>
+          <th class="text-right">AANTAL</th>
+          <th class="text-right">PRIJS</th>
+          <th class="text-right">TOTAAL</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each items}}
+        <tr>
+          <td>
+            {{this.name}} {{#if this.description}}
+            <p class="text-xs">{{{this.description}}}</p>
+            {{/if}}
+          </td>
+          <td class="text-right">{{this.amount}} {{this.unit}}</td>
+          <td class="text-right">{{valuta this.price}}</td>
+          <td class="text-right">{{valuta this.total}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <div class="flex-end">
+      <table class="totals text-right mt-lg">
+        <tbody>
+          <tr>
+            <th>Totaal ex. BTW</th>
+            <td>{{valuta subtotal}}</td>
+          </tr>
+          <tr>
+            <th>BTW {{percentage vat}}</th>
+            <td>{{valuta tax}}</td>
+          </tr>
+          <tr>
+            <th>&nbsp;</th>
+          </tr>
+          <tr class="text-lg">
+            <th>TOTAAL</th>
+            <td>{{valuta total}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="flex-end">
+      <p class="text-sm width-70 mt-xl text-right">
+        Graag het te betalen bedrag van {{valuta total}} binnen 30 dagen na
+        factuurdatum o.v.v. factuurnummer {{invoiceNumber}} overmaken naar
+        {{company.iban}} t.n.v. {{company.accountHolder}}.
+      </p>
+    </div>
+  </div>
+  <p class="footer text-center">
+    <b>{{company.name}}</b> <span class="light">|</span> {{company.address}}
+    <span class="light">|</span> {{company.email}} <span class="light">|</span>
+    <b>IBAN</b> {{company.iban}} <span class="light">|</span>
+    <b>BIC</b> INGBNL2A <span class="light">|</span> <b>KvK</b> {{company.coc}}
+    <span class="light">|</span> <b>BTW</b> {{company.vat}}
+  </p>
+</div>

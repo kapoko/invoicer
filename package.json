@@ -1,0 +1,27 @@
+{
+  "name": "lil-invoicer",
+  "version": "1.0.0",
+  "description": "Littlest invoice tool for the command line",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "tsc --watch",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "Kasper Koman",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^9.1.0",
+    "handlebars": "^4.7.7",
+    "js-yaml": "^4.1.0",
+    "puppeteer": "^13.5.1"
+  },
+  "bin": {
+    "invoice": "dist/index.js"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.5",
+    "@types/puppeteer": "^5.4.5",
+    "typescript": "^4.6.2"
+  }
+}

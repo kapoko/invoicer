@@ -1,0 +1,28 @@
+company:
+  name:
+  address:
+  zipcode:
+  city:
+  vat:
+  coc:
+  accountHolder:
+  iban:
+  phone:
+  email:
+
+clients:
+- id: 1
+  company: 
+  contact: 
+  adress: 
+  zipcode: 
+  city: 
+  country: 
+
+- id: 2
+  company: 
+  contact: 
+  adress: 
+  zipcode: 
+  city: 
+  country: 
