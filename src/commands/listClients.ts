@@ -1,3 +1,3 @@
-import { clients } from "../config";
+import { clients } from "../lib/config";
 
 export default () => console.table(clients);

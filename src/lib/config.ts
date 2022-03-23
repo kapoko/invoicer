@@ -1,9 +1,9 @@
 import { dirname, join } from "path";
 import { readFileSync } from "fs";
 import yaml from "js-yaml";
-import { Config } from "./types";
+import { Config } from "../types";
 
-const configPath = join(dirname(__dirname), "config");
+const configPath = join(__dirname, "..", "..", "config");
 
 const getConfig = () => {
   const config = yaml.load(
@@ -13,4 +13,4 @@ const getConfig = () => {
   return config;
 };
 
-export const { clients, company } = getConfig();
+export const { clients, company, invoice } = getConfig();

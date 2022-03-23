@@ -3,5 +3,7 @@ dist/
 node_modules/
 invoices/*
 !invoices/.gitkeep
+generated/*
+!generated/.gitkeep
 config/*
 !config/*.example.yml

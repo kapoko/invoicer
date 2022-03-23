@@ -12,7 +12,7 @@
   .container {
     width: 210mm;
     min-height: 290mm;
-    padding: 3rem 4rem;
+    padding: 3rem 4rem 2rem;
     margin: 0 auto;
     font-family: "Roboto", sans-serif;
     font-weight: 300;
@@ -65,6 +65,10 @@
     text-align: center;
   }
 
+  .wrap {
+    white-space: pre-line;
+  }
+
   .light {
     color: #ccc;
   }
@@ -84,7 +88,11 @@
 
   th {
     border-bottom: 1px #ccc solid;
-    padding: 0.75em 0;
+    padding: 0.5em 0;
+  }
+
+  th:not(:first-child) {
+    padding: 0.5em 0 0.5em 1.5em;
   }
 
   td {
@@ -131,10 +139,11 @@
 
   .footer {
     font-size: 0.6em;
+    margin-bottom: 0;
   }
 
-  .width-70 {
-    max-width: 70%;
+  .width-50 {
+    max-width: 50%;
   }
 </style>
 
@@ -161,7 +170,6 @@
           {{client.zipcode}} {{client.city}}<br />
         </p>
       </div>
-
       <div class="text-right">
         <h1 class="mt-0">
           FACTUUR <span class="light">|</span> {{invoiceNumber}}
@@ -173,7 +181,7 @@
         </p>
         <p class="mt text-sm">
           e <span class="light">|</span> {{company.email}}<br />
-          m <span class="light">|</span> {{company.phone}}
+          t <span class="light">|</span> {{company.phone}}
         </p>
 
         <p class="mt text-sm">
@@ -185,7 +193,7 @@
     </div>
     <div class="columns mt-lg">
       <p><b>FACTUUR</b> {{invoiceNumber}}</p>
-      <p><b>Datum</b> {{date}}</p>
+      <p><b>Datum</b> {{formatDate date}}</p>
     </div>
     <table>
       <thead>
@@ -200,10 +208,11 @@
         {{#each items}}
         <tr>
           <td>
-            {{this.name}} {{#if this.description}}
-            <p class="text-xs">{{{this.description}}}</p>
+            {{this.title}} {{#if this.description}}
+            <p class="text-xs wrap">{{{this.description}}}</p>
             {{/if}}
           </td>
+
           <td class="text-right">{{this.amount}} {{this.unit}}</td>
           <td class="text-right">{{valuta this.price}}</td>
           <td class="text-right">{{valuta this.total}}</td>
@@ -218,10 +227,12 @@
             <th>Totaal ex. BTW</th>
             <td>{{valuta subtotal}}</td>
           </tr>
+          {{#each vat}}
           <tr>
-            <th>BTW {{percentage vat}}</th>
-            <td>{{valuta tax}}</td>
+            <th>BTW {{percentage @key}}</th>
+            <td>{{valuta this}}</td>
           </tr>
+          {{/each}}
           <tr>
             <th>&nbsp;</th>
           </tr>
@@ -233,10 +244,11 @@
       </table>
     </div>
     <div class="flex-end">
-      <p class="text-sm width-70 mt-xl text-right">
-        Graag het te betalen bedrag van {{valuta total}} binnen 30 dagen na
-        factuurdatum o.v.v. factuurnummer {{invoiceNumber}} overmaken naar
-        {{company.iban}} t.n.v. {{company.accountHolder}}.
+      <p class="text-xs width-50 mt-xl text-right">
+        Graag het te betalen bedrag van {{valuta total}} binnen
+        {{invoice.paymentTerm}} dagen na factuurdatum o.v.v. factuurnummer
+        {{invoiceNumber}} overmaken naar {{company.iban}} t.n.v.
+        {{company.accountHolder}}.
       </p>
     </div>
   </div>

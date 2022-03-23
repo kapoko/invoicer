@@ -10,19 +10,26 @@ company:
   phone:
   email:
 
-clients:
-- id: 1
-  company: 
-  contact: 
-  adress: 
-  zipcode: 
-  city: 
-  country: 
+invoice:
+  template: invoice.html
+  prefix: INVOICE_
+  defaultVat: 0.21
+  locale: en-GB
+  paymentTerm: 14
 
-- id: 2
-  company: 
-  contact: 
-  adress: 
-  zipcode: 
-  city: 
-  country: 
+clients:
+  - id: 1
+    company:
+    contact:
+    adress:
+    zipcode:
+    city:
+    country:
+
+  - id: 2
+    company:
+    contact:
+    adress:
+    zipcode:
+    city:
+    country:
