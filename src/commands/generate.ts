@@ -7,12 +7,11 @@ import * as config from "../lib/config";
 import yaml from "js-yaml";
 import { InvoiceData, InvoiceDataItem, InvoiceYAML } from "../types";
 
-const invoicePath = join(__dirname, "..", "..", "invoices");
-const templatePath = join(__dirname, "..", "..", "templates");
+const appRoot = join(__dirname, "..", "..");
 
 const getInvoices = () => {
   // Read files
-  const files = glob.sync(`${invoicePath}/*.yml`);
+  const files = glob.sync(`${appRoot}/invoices/*.yml`);
   const data = files.map(
     (f) => yaml.load(readFileSync(f, "utf8")) as InvoiceYAML
   );
@@ -84,7 +83,7 @@ export default () => {
         const fileName = `${config.invoice.prefix}${invoice.invoiceNumber}.pdf`;
 
         const templateHtml = readFileSync(
-          join(templatePath, config.invoice.template),
+          join(appRoot, "templates", config.invoice.template),
           "utf8"
         );
         const template = handlebars.compile(templateHtml);
@@ -92,7 +91,7 @@ export default () => {
         const options = {
           format: "a4" as PaperFormat,
           printBackground: true,
-          path: `generated/${fileName}`,
+          path: join(appRoot, "generated", fileName),
         };
 
         const page = await browser.newPage();
