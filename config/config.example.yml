@@ -25,6 +25,7 @@ clients:
     zipcode:
     city:
     country:
+    vatId:
 
   - id: 2
     company:
@@ -33,3 +34,4 @@ clients:
     zipcode:
     city:
     country:
+    vatId:

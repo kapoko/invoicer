@@ -96,10 +96,14 @@
   }
 
   td {
-    padding: 0.75em 0;
+    padding: 0.6em 0;
     margin: 0;
     white-space: nowrap;
     vertical-align: text-top;
+  }
+
+  td:not(:first-child) {
+    padding: 0.6em 0 0.6em 1.5em;
   }
 
   .totals {
@@ -246,14 +250,15 @@
     <div class="flex-end">
       <p class="text-xs width-50 mt-xl text-right">
         Graag het te betalen bedrag van {{valuta total}} binnen
-        {{invoice.paymentTerm}} dagen na factuurdatum o.v.v. factuurnummer
-        {{invoiceNumber}} overmaken naar {{company.iban}} t.n.v.
+        {{config.invoice.paymentTerm}} dagen na factuurdatum o.v.v.
+        factuurnummer {{invoiceNumber}} overmaken naar {{company.iban}} t.n.v.
         {{company.accountHolder}}.
       </p>
     </div>
   </div>
   <p class="footer text-center">
     <b>{{company.name}}</b> <span class="light">|</span> {{company.address}}
+    <span class="light">|</span> {{company.zipcode}} {{company.city}}
     <span class="light">|</span> {{company.email}} <span class="light">|</span>
     <b>IBAN</b> {{company.iban}} <span class="light">|</span>
     <b>BIC</b> INGBNL2A <span class="light">|</span> <b>KvK</b> {{company.coc}}

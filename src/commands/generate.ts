@@ -8,6 +8,7 @@ import yaml from "js-yaml";
 import { InvoiceData, InvoiceDataItem, InvoiceYAML } from "../types";
 
 const invoicePath = join(__dirname, "..", "..", "invoices");
+const templatePath = join(__dirname, "..", "..", "templates");
 
 const getInvoices = () => {
   // Read files
@@ -71,34 +72,40 @@ const getInvoices = () => {
 export default () => {
   try {
     (async () => {
-      const { invoice } = config;
-      const dataBinding = { ...getInvoices()[0], invoice };
-      console.log(dataBinding);
-
-      const templateHtml = readFileSync(
-        join(process.cwd(), "templates", config.invoice.template),
-        "utf8"
-      );
-      const template = handlebars.compile(templateHtml);
-      const finalHtml = encodeURIComponent(template(dataBinding));
-      const options = {
-        format: "a4" as PaperFormat,
-        printBackground: true,
-        path: `generated/${invoice.prefix}${dataBinding.invoiceNumber}.pdf`,
-      };
-
+      // Launch puppeteer
       const browser = await puppeteer.launch({
         args: ["--no-sandbox"],
         headless: true,
       });
-      const page = await browser.newPage();
-      await page.goto(`data:text/html;charset=UTF-8,${finalHtml}`, {
-        waitUntil: "networkidle0",
-      });
-      await page.pdf(options);
-      await browser.close();
 
-      console.log("Done: invoice.pdf is created!");
+      // Generate each invoice
+      for await (const invoice of getInvoices()) {
+        const dataBinding = { ...invoice, config };
+        const fileName = `${config.invoice.prefix}${invoice.invoiceNumber}.pdf`;
+
+        const templateHtml = readFileSync(
+          join(templatePath, config.invoice.template),
+          "utf8"
+        );
+        const template = handlebars.compile(templateHtml);
+        const finalHtml = encodeURIComponent(template(dataBinding));
+        const options = {
+          format: "a4" as PaperFormat,
+          printBackground: true,
+          path: `generated/${fileName}`,
+        };
+
+        const page = await browser.newPage();
+        await page.goto(`data:text/html;charset=UTF-8,${finalHtml}`, {
+          waitUntil: "networkidle0",
+        });
+        await page.pdf(options);
+
+        console.log(`✨ ${fileName} is created!`);
+      }
+
+      // Close puppeteer
+      await browser.close();
     })();
   } catch (e) {
     console.error(e);

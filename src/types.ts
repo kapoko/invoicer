@@ -6,6 +6,7 @@ export type Client = {
   zipcode: string;
   city: string;
   country?: string;
+  vatId: string;
 };
 
 export type Company = {
