@@ -171,7 +171,8 @@
         <p class="mt-sm text-sm">
           t.a.v. {{client.contact}}<br />
           {{client.address}}<br />
-          {{client.zipcode}} {{client.city}}<br />
+          {{client.zipcode}} {{client.city}}{{#if client.country}},
+          {{client.country}}{{/if}}<br />
           {{#if client.vatId}} VAT <span class="light">|</span> {{client.vatId}}
           {{/if}}
         </p>
