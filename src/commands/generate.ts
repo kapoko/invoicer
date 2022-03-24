@@ -42,7 +42,7 @@ const getInvoices = (invoiceIds: string[] = []) => {
       amount: item.a || 1,
       total: item.p * (item.a || 1),
       description: item.d,
-      vat: item.v || config.invoice.defaultVat,
+      vat: item.v || item.v === 0 ? item.v : config.invoice.defaultVat,
       unit: item.u,
     }));
 

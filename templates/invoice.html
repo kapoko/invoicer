@@ -172,6 +172,8 @@
           t.a.v. {{client.contact}}<br />
           {{client.address}}<br />
           {{client.zipcode}} {{client.city}}<br />
+          {{#if client.vatId}} VAT <span class="light">|</span> {{client.vatId}}
+          {{/if}}
         </p>
       </div>
       <div class="text-right">
