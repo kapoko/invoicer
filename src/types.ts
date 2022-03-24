@@ -68,5 +68,7 @@ export type Config = {
     template: string;
     defaultVat: number;
     locale: string;
+    paymentTerm: number;
+    outDir?: string;
   };
 };

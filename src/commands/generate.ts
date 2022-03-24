@@ -1,20 +1,20 @@
-import { readFileSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import { join, basename } from "path";
-import glob from "glob";
 import puppeteer, { PaperFormat } from "puppeteer";
 import handlebars from "../lib/handlebars";
 import * as config from "../lib/config";
-import yaml from "js-yaml";
-import { InvoiceData, InvoiceDataItem, InvoiceYAML } from "../types";
+import { InvoiceData, InvoiceDataItem } from "../types";
+import {
+  readInvoiceData,
+  getInvoicePaths,
+  getOutputDirectory,
+} from "../lib/files";
 
 const appRoot = join(__dirname, "..", "..");
 
-const getInvoices = () => {
-  // Read files
-  const files = glob.sync(`${appRoot}/invoices/*.yml`);
-  const data = files.map(
-    (f) => yaml.load(readFileSync(f, "utf8")) as InvoiceYAML
-  );
+const getInvoices = (invoiceIds: string[] = []) => {
+  const invoicePaths = getInvoicePaths(invoiceIds);
+  const data = readInvoiceData(invoicePaths);
 
   const invoices: InvoiceData[] = data.map((inv, index) => {
     // Date
@@ -22,9 +22,11 @@ const getInvoices = () => {
     const { company } = config;
 
     // Invoice number, check if filename is a number
-    const invoiceNumber = parseInt(basename(files[index], ".yml"));
+    const invoiceNumber = parseInt(basename(invoicePaths[index], ".yml"));
     if (isNaN(invoiceNumber)) {
-      throw new Error(`Invoice file ${basename(files[index])} is not numeric.`);
+      throw new Error(
+        `Invoice file ${basename(invoicePaths[index])} is not numeric.`
+      );
     }
 
     // Find client, throw error if it doesn't exist
@@ -68,44 +70,66 @@ const getInvoices = () => {
   return invoices;
 };
 
-export default () => {
+export default async (
+  invoiceIds: string[],
+  options: {
+    force: boolean | undefined;
+  }
+) => {
   try {
-    (async () => {
-      // Launch puppeteer
-      const browser = await puppeteer.launch({
-        args: ["--no-sandbox"],
-        headless: true,
-      });
+    // Launch puppeteer
+    const browser = await puppeteer.launch({
+      args: ["--no-sandbox"],
+      headless: true,
+    });
 
-      // Generate each invoice
-      for await (const invoice of getInvoices()) {
-        const dataBinding = { ...invoice, config };
-        const fileName = `${config.invoice.prefix}${invoice.invoiceNumber}.pdf`;
+    // Loop over invoices, all if them if no invoiceIds are given
+    const invoices = getInvoices(invoiceIds);
 
-        const templateHtml = readFileSync(
-          join(appRoot, "templates", config.invoice.template),
-          "utf8"
-        );
-        const template = handlebars.compile(templateHtml);
-        const finalHtml = encodeURIComponent(template(dataBinding));
-        const options = {
-          format: "a4" as PaperFormat,
-          printBackground: true,
-          path: join(appRoot, "generated", fileName),
-        };
+    let count = 0;
 
-        const page = await browser.newPage();
-        await page.goto(`data:text/html;charset=UTF-8,${finalHtml}`, {
-          waitUntil: "networkidle0",
-        });
-        await page.pdf(options);
+    for await (const invoice of invoices) {
+      const dataBinding = { ...invoice, config };
+      const fileName = `${config.invoice.prefix}${invoice.invoiceNumber}.pdf`;
+      const path = join(getOutputDirectory(), fileName);
 
-        console.log(`✨ ${fileName} is created!`);
+      // If generated invoice already exists, don't generate it
+      if (!options.force && existsSync(path)) {
+        continue;
       }
 
-      // Close puppeteer
-      await browser.close();
-    })();
+      const templateHtml = readFileSync(
+        join(appRoot, "templates", config.invoice.template),
+        "utf8"
+      );
+      const template = handlebars.compile(templateHtml);
+      const finalHtml = encodeURIComponent(template(dataBinding));
+      const pdfOptions = {
+        format: "a4" as PaperFormat,
+        printBackground: true,
+        path,
+      };
+
+      const page = await browser.newPage();
+      await page.goto(`data:text/html;charset=UTF-8,${finalHtml}`, {
+        waitUntil: "networkidle0",
+      });
+      await page.pdf(pdfOptions);
+
+      console.log(`✨ ${fileName} created!`);
+      count++;
+    }
+
+    // Close puppeteer
+    await browser.close();
+
+    // Result message
+    const existing = invoices.length - count;
+    const existingMessage = existing
+      ? `${existing} invoice(s) already existed.`
+      : "";
+
+    console.log("Done! " + existingMessage);
   } catch (e) {
     console.error(e);
   }

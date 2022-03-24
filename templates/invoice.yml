@@ -1,0 +1,8 @@
+to: 
+date: {{date}}
+
+# Use t for title, p for price, a for amount (optional, default 1), u for unit (optional), d for description (optional), v for vat (optional)
+items:
+  - t: 
+    p: 
+    a: 

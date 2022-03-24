@@ -1,7 +1,7 @@
 {
   "name": "lil-invoicer",
   "version": "1.0.0",
-  "description": "Littlest invoice tool for the command line",
+  "description": "Littlest invoice tool for the command line.",
   "main": "dist/index.js",
   "scripts": {
     "start": "tsc --watch",
