@@ -25,8 +25,7 @@ Options:
 Commands:
   generate [options] [invoiceIds...]  generate PDFs from invoice yaml files
   new                                 create new invoice data file
-  list                                list invoices comma-separated with some
-                                      useful data
-  clients                             list clients
+  list                                list invoices comma-separated with some useful data
+  clients [options]                   list clients
   help [command]                      display help for command
 ```
