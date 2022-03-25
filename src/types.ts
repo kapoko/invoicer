@@ -47,6 +47,10 @@ export type InvoiceDataItem = {
   total: number;
 };
 
+export type VatIndex = {
+  [key: number]: number;
+};
+
 export type InvoiceData = {
   company: Company;
   client: Client;
@@ -54,9 +58,7 @@ export type InvoiceData = {
   date: Date;
   items: InvoiceDataItem[];
   subtotal: number;
-  vat: {
-    [key: number]: number;
-  };
+  vat: VatIndex;
   total: number;
 };
 

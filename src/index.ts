@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import { generate, listClients, newInvoice } from "./commands";
+import { generate, listClients, newInvoice, list } from "./commands";
+import { VatIndex } from "./types";
 const packageJson = require("../package.json");
 
 const program = new Command();
@@ -22,6 +23,11 @@ program
   .command("new")
   .description("create new invoice data file")
   .action(newInvoice);
+
+program
+  .command("list")
+  .description("list invoices comma-separated with some useful data")
+  .action(list);
 
 program.command("clients").description("list clients").action(listClients);
 
