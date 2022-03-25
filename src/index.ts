@@ -13,7 +13,7 @@ program
 
 program
   .command("generate")
-  .description("generate invoices from data files")
+  .description("generate PDFs from invoice yaml files")
   .option("-f, --force", "generate even if invoices already exists")
   .argument("[invoiceIds...]", "(optional) invoice IDs to generate")
   .action(generate);

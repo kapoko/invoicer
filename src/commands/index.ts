@@ -1,5 +1,8 @@
-import listClients from "./listClients";
-import generate from "./generate";
-import newInvoice from "./newInvoice";
+import listClientsCommand from "./listClients";
+import generateCommand from "./generate";
+import newInvoiceCommand from "./newInvoice";
+import { withErrorHandling } from "../lib/errorHandler";
 
-export { listClients, generate, newInvoice };
+export const listClients = withErrorHandling(listClientsCommand);
+export const generate = withErrorHandling(generateCommand);
+export const newInvoice = withErrorHandling(newInvoiceCommand);
