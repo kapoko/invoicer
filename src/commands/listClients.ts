@@ -1,15 +1,19 @@
 import { clients } from "../lib/config";
 import { getInvoicePaths, readInvoiceData } from "../lib/files";
 
-export default () => {
+export default (options: { csv: boolean | undefined }) => {
   const invoicePaths = getInvoicePaths();
-  const data = readInvoiceData(invoicePaths);
+  const invoiceData = readInvoiceData(invoicePaths);
 
-  console.table(
-    clients.map(({ id, company }) => ({
+  if (options.csv) {
+    clients.map((c) => console.log(Object.values(c).join(",")));
+  } else {
+    const data = clients.map(({ id, company }) => ({
       id,
       company,
-      numInv: data.filter((inv) => inv.to === id).length,
-    }))
-  );
+      numInv: invoiceData.filter((inv) => inv.to === id).length,
+    }));
+
+    console.table(data);
+  }
 };

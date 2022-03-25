@@ -29,6 +29,10 @@ program
   .description("list invoices comma-separated with some useful data")
   .action(list);
 
-program.command("clients").description("list clients").action(listClients);
+program
+  .command("clients")
+  .description("list clients")
+  .option("-c, --csv", "output in .csv format")
+  .action(listClients);
 
 program.parse();

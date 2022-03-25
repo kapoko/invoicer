@@ -12,7 +12,7 @@ company:
 
 invoice:
   template: invoice.html
-  prefix: INVOICE_
+  prefix: Invoice_
   defaultVat: 0.21
   locale: en-GB
   paymentTerm: 14

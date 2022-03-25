@@ -4,9 +4,11 @@ Lil' invoicer is a command line tool for creating invoices. It generates high-qu
 
 ## Installation 
 
-Run `npm install && npm link`. List commands with `invoice help`. 
+Run `npm install && npm link`.
 
-If permission is denied run `chmod +x dist/index.js`
+Run `cp config/config.example.yml config/config.yml` and fill in your config.
+
+List commands with `invoice help`. If permission is denied run `chmod +x dist/index.js`
 
 ## Usage
 
