@@ -1,10 +1,9 @@
 import { getInvoices } from "../lib/invoice";
-import * as config from "../lib/config";
-
-const { locale } = config.invoice;
+import { getConfig } from "../lib/config";
 
 export default () => {
   const invoices = getInvoices();
+  const { locale } = getConfig().invoice;
 
   invoices.forEach((invoice) => {
     const {
@@ -24,7 +23,7 @@ export default () => {
       const subtotal = items
         .filter((item) => item.vat === vat)
         .reduce((sum, item) => sum + item.total, 0)
-        .toLocaleString(config.invoice.locale);
+        .toLocaleString(locale);
 
       let info = [
         invoiceNumber,

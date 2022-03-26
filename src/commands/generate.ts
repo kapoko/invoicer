@@ -2,7 +2,7 @@ import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 import puppeteer, { PaperFormat } from "puppeteer";
 import handlebars from "../lib/handlebars";
-import * as config from "../lib/config";
+import { getConfig } from "../lib/config";
 import { getOutputDirectory } from "../lib/files";
 import { getInvoices } from "../lib/invoice";
 
@@ -14,11 +14,13 @@ export default async (
     force: boolean | undefined;
   }
 ) => {
+  const config = getConfig();
+
   if (!invoiceIds.length && options.force) {
     throw new Error("For safety you can't use force flag on all invoices");
   }
 
-  // Loop over invoices, all if them if no invoiceIds are given
+  // Get the invoices, all if them if invoiceIds is empty
   const invoices = getInvoices(invoiceIds);
 
   if (!invoices.length) {

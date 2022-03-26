@@ -66,7 +66,7 @@ export type Config = {
   clients: Client[];
   company: Company;
   invoice: {
-    prefix: number;
+    prefix: string;
     template: string;
     defaultVat: number;
     locale: string;

@@ -5,12 +5,14 @@ import { Config } from "../types";
 
 const configPath = join(__dirname, "..", "..", "config");
 
-const getConfig = () => {
-  const config = yaml.load(
-    readFileSync(join(configPath, "config.yml"), "utf8")
-  ) as Config;
+export const getConfig = () => {
+  try {
+    const config = yaml.load(
+      readFileSync(join(configPath, "config.yml"), "utf8")
+    ) as Config;
 
-  return config;
+    return config;
+  } catch (e) {
+    throw new Error("Config file doens't exist. Run invoice init");
+  }
 };
-
-export const { clients, company, invoice } = getConfig();

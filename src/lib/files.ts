@@ -1,10 +1,10 @@
 import { join, basename } from "path";
 import glob from "glob";
 import yaml from "js-yaml";
-import { readFileSync, appendFileSync } from "fs";
+import { readFileSync, appendFileSync, existsSync } from "fs";
 import { InvoiceYAML } from "../types";
 import handlebars from "./handlebars";
-import * as config from "./config";
+import { getConfig } from "./config";
 
 const appRoot = join(__dirname, "..", "..");
 
@@ -12,9 +12,8 @@ const appRoot = join(__dirname, "..", "..");
  * Get output dir
  */
 const getOutputDirectory = () => {
-  return config.invoice.outDir
-    ? config.invoice.outDir
-    : join(appRoot, "generated");
+  const { outDir } = getConfig().invoice;
+  return outDir ? outDir : join(appRoot, "generated");
 };
 
 /**
@@ -79,10 +78,27 @@ const generateNewInvoiceDataFile = () => {
     date: new Date().toISOString().substring(0, 10),
   });
 
-  const filePath = join(appRoot, "invoices", nextInvoiceNumber() + ".yml");
-  appendFileSync(filePath, generatedYaml);
+  const path = join(appRoot, "invoices", nextInvoiceNumber() + ".yml");
+  appendFileSync(path, generatedYaml);
 
-  return filePath;
+  return path;
+};
+
+const copyConfigExample = () => {
+  const path = join(appRoot, "config", "config.yml");
+
+  if (existsSync(path)) {
+    throw new Error("Config file config.yml already exists.");
+  }
+
+  const configExampleYaml = readFileSync(
+    join(appRoot, "config", "config.example.yml"),
+    "utf8"
+  );
+
+  appendFileSync(path, configExampleYaml);
+
+  return path;
 };
 
 export {
@@ -92,4 +108,5 @@ export {
   nextInvoiceNumber,
   generateNewInvoiceDataFile,
   getOutputDirectory,
+  copyConfigExample,
 };

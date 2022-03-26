@@ -6,7 +6,7 @@
   "scripts": {
     "start": "tsc --watch",
     "build": "tsc",
-    "prepare": "tsc"
+    "prepare": "tsc && chmod +x dist/index.js"
   },
   "keywords": [],
   "author": "Kasper Koman",

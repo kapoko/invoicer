@@ -1,9 +1,10 @@
-import { clients } from "../lib/config";
+import { getConfig } from "../lib/config";
 import { getInvoicePaths, readInvoiceData } from "../lib/files";
 
 export default (options: { csv: boolean | undefined }) => {
   const invoicePaths = getInvoicePaths();
   const invoiceData = readInvoiceData(invoicePaths);
+  const { clients } = getConfig();
 
   if (options.csv) {
     clients.map((c) => console.log(Object.values(c).join(",")));

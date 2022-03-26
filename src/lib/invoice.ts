@@ -1,7 +1,7 @@
 import { join, basename } from "path";
 import { InvoiceData, InvoiceDataItem, VatIndex } from "../types";
 import { getInvoicePaths, readInvoiceData } from "./files";
-import * as config from "../lib/config";
+import { getConfig } from "../lib/config";
 
 // Generate InvoiceData array from invoice ids
 export const getInvoices = (invoiceIds: string[] = []) => {
@@ -11,7 +11,7 @@ export const getInvoices = (invoiceIds: string[] = []) => {
   const invoices: InvoiceData[] = data.map((inv, index) => {
     // Date
     const date = inv.date;
-    const { company } = config;
+    const { company, clients } = getConfig();
 
     // Invoice number, check if filename is a number
     const invoiceNumber = parseInt(basename(invoicePaths[index], ".yml"));
@@ -22,7 +22,7 @@ export const getInvoices = (invoiceIds: string[] = []) => {
     }
 
     // Find client, throw error if it doesn't exist
-    const client = config.clients.find((c) => c.id === inv.to);
+    const client = clients.find((c) => c.id === inv.to);
     if (!client) {
       throw new Error(`Client with id ${inv.to} doesn't exist`);
     }
@@ -34,7 +34,7 @@ export const getInvoices = (invoiceIds: string[] = []) => {
       amount: item.a || 1,
       total: item.p * (item.a || 1),
       description: item.d,
-      vat: item.v || item.v === 0 ? item.v : config.invoice.defaultVat,
+      vat: item.v || item.v === 0 ? item.v : getConfig().invoice.defaultVat,
       unit: item.u,
     }));
 

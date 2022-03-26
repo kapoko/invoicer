@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import { generate, listClients, newInvoice, list } from "./commands";
-import { VatIndex } from "./types";
+import { generate, listClients, newInvoice, list, init } from "./commands";
 const packageJson = require("../package.json");
 
 const program = new Command();
@@ -11,6 +10,8 @@ program
   .name("invoice")
   .description(packageJson.description)
   .version(packageJson.version);
+
+program.command("init").description("create main config file").action(init);
 
 program
   .command("generate")
