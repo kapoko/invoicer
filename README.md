@@ -11,7 +11,7 @@ Run `invoice init` and fill in your config.
 ## Usage
 
 ```
-~ ❯ invoice help
+$ invoice help
 Usage: invoice [options] [command]
 
 Littlest invoice tool for the command line.
@@ -26,4 +26,92 @@ Commands:
   list                                list invoices comma-separated with some useful data
   clients [options]                   list clients
   help [command]                      display help for command
+```
+
+## Config
+
+Run `invoice init` before first time use to create a new config file.
+
+`config/config.yml`
+```yaml
+invoice:                    
+  template: invoice.html    # File to use as template, so you can use your own
+  prefix: Invoice_          # Prefix of generated PDFs, followed by the invoice number
+  defaultVat: 0.21          # Will apply to any item where no vat is given
+  locale: en-GB             # Applies to date and number formatting on the invoice
+  paymentTerm: 14           # In days
+  outDir:                   # Optional absolute path. If empty the local folder
+                            # ./generated will be used
+
+company:                    # Your commany info
+  name:                     
+  address:
+  zipcode:
+  city:
+  vatId:                      
+  coc:
+  accountHolder:
+  iban:
+  phone:
+  email:
+
+clients:                    # Your client list
+  - id: 1
+    company:
+    contact:
+    adress:
+    zipcode:
+    city:
+    country:
+    vatId:
+
+  - id: 2
+    company:
+    contact:
+    adress:
+    zipcode:
+    city:
+    country:
+    vatId:
+```
+
+All this data can be accessed in the html template i.e. by using `{{config.invoice.paymentTerm}}` so it's possible to add custom variables here. 
+
+## Creating invoices 
+
+### Generate new invoice data file
+```bash
+$ invoice new
+✨ New invoice created! /path/to/invoicer/invoices/1.yml
+```
+
+The filename will be the invoice number. To start at another number change the filename accordingly. `invoice new` will automatically increment from the highest invoice number it can find. 
+
+### Fill in the data
+`invoices/1.yml`
+```yaml
+to: 
+date: 2030-01-26  
+
+# Use t for title, p for price, a for amount (optional, default 1), u for unit (optional), d for description (optional), v for vat (optional)
+items:
+  - t: 
+    p: 
+```
+
+- `to` must be set to the client's id from the config file. 
+- `date` will be filled automatically. 
+- `items` is a list/array of products for the invoice. Only `t` and `p` are required per item.
+  - `t` title (required)
+  - `p` price (required)
+  - `a` amount (optional, default 1), total of this item will be `price` * `amount`
+  - `u` unit (optional, default empty), for example `hours` or `pieces`. 
+  - `d` description (optional, default empty), will be rendered below the title. in smaller font. Use `|` for multiline.
+  - `v` vat (optional, default `invoice.defaultVat` from config), can be any other percentage, to allow for different vat percentages on one invoice.
+
+### Generate PDF
+```bash
+$ invoice generate
+✨ Invoice_1.pdf generated!
+Done!
 ```

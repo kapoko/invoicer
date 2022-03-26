@@ -7,3 +7,6 @@ generated/*
 !generated/.gitkeep
 config/*
 !config/*.example.yml
+templates/*
+!templates/invoice.html
+!templates/invoice.yml

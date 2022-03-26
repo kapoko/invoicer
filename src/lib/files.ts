@@ -57,7 +57,7 @@ const nextInvoiceNumber = () => {
 
   const max = ids.reduce(function (a, b) {
     return Math.max(a, b);
-  }, -Infinity);
+  }, 0);
 
   return max + 1;
 };

@@ -63,7 +63,7 @@ export default async (
     });
     await page.pdf(pdfOptions);
 
-    console.log(`✨ ${fileName} created!`);
+    console.log(`✨ ${fileName} generated!`);
     count++;
   }
 

@@ -1,15 +1,3 @@
-company:
-  name:
-  address:
-  zipcode:
-  city:
-  vat:
-  coc:
-  accountHolder:
-  iban:
-  phone:
-  email:
-
 invoice:
   template: invoice.html
   prefix: Invoice_
@@ -18,11 +6,23 @@ invoice:
   paymentTerm: 14
   outDir:
 
+company:
+  name:
+  address:
+  zipcode:
+  city:
+  vatId:
+  coc:
+  accountHolder:
+  iban:
+  phone:
+  email:
+
 clients:
   - id: 1
     company:
     contact:
-    adress:
+    address:
     zipcode:
     city:
     country:
@@ -31,7 +31,7 @@ clients:
   - id: 2
     company:
     contact:
-    adress:
+    address:
     zipcode:
     city:
     country:
