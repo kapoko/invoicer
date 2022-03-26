@@ -8,14 +8,19 @@ import * as config from "./config";
 
 const appRoot = join(__dirname, "..", "..");
 
-// Get output dir
+/**
+ * Get output dir
+ */
 const getOutputDirectory = () => {
   return config.invoice.outDir
     ? config.invoice.outDir
     : join(appRoot, "generated");
 };
 
-// Get all file paths, or specific ones when invoiceIds is given
+/**
+ * Get all file paths, or specific ones when invoiceIds is given
+ * @returns array of paths
+ */
 const getInvoicePaths = (invoiceIds: string[] = []) => {
   const files = glob.sync(
     invoiceIds.length
@@ -26,7 +31,9 @@ const getInvoicePaths = (invoiceIds: string[] = []) => {
   return files;
 };
 
-// Reads the data from yaml files
+/**
+ * Reads the data from yaml files
+ */
 const readInvoiceData = (filePaths: string[]) => {
   const data = filePaths.map(
     (f) => yaml.load(readFileSync(f, "utf8")) as InvoiceYAML
@@ -35,13 +42,17 @@ const readInvoiceData = (filePaths: string[]) => {
   return data;
 };
 
-// Returns basenames of all invoice data files
+/**
+ * @retuns Basenames of all invoice data files
+ */
 const getAllInvoiceIds = () => {
   const paths = getInvoicePaths();
   return paths.map((p) => basename(p, ".yml"));
 };
 
-// Finds the highest invoice number and returns the next one
+/**
+ * Finds the highest invoice number and returns the next one
+ */
 const nextInvoiceNumber = () => {
   const ids = getAllInvoiceIds().map((v) => parseInt(v));
 
@@ -52,6 +63,9 @@ const nextInvoiceNumber = () => {
   return max + 1;
 };
 
+/**
+ * @returns File path of the newly created invoice
+ */
 const generateNewInvoiceDataFile = () => {
   const templateYaml = readFileSync(
     join(appRoot, "templates", "invoice.yml"),
@@ -65,10 +79,10 @@ const generateNewInvoiceDataFile = () => {
     date: new Date().toISOString().substring(0, 10),
   });
 
-  const newInvoice = nextInvoiceNumber() + ".yml";
-  appendFileSync(join(appRoot, "invoices", newInvoice), generatedYaml);
+  const filePath = join(appRoot, "invoices", nextInvoiceNumber() + ".yml");
+  appendFileSync(filePath, generatedYaml);
 
-  return newInvoice;
+  return filePath;
 };
 
 export {

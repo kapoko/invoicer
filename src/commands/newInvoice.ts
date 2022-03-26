@@ -1,7 +1,7 @@
 import { generateNewInvoiceDataFile, nextInvoiceNumber } from "../lib/files";
 
 export default () => {
-  const filename = generateNewInvoiceDataFile();
+  const path = generateNewInvoiceDataFile();
 
-  console.log(`✨ ${filename} created!`);
+  console.log(`✨ New invoice created! ${path}`);
 };
