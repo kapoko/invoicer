@@ -5,9 +5,13 @@ import { Config } from "../types";
 
 const configPath = join(__dirname, "..", "..", "config");
 
+let config: Config | undefined;
+
 export const getConfig = () => {
+  if (config) return config;
+
   try {
-    const config = yaml.load(
+    config = yaml.load(
       readFileSync(join(configPath, "config.yml"), "utf8")
     ) as Config;
 

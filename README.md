@@ -80,7 +80,7 @@ All this data can be accessed in the html template i.e. by using `{{config.invoi
 ## Creating invoices 
 
 ### Generate new invoice data file
-```bash
+```
 $ invoice new
 ✨ New invoice created! /path/to/invoicer/invoices/1.yml
 ```
@@ -110,7 +110,7 @@ items:
   - `v` vat (optional, default `invoice.defaultVat` from config), can be any other percentage, to allow for different vat percentages on one invoice.
 
 ### Generate PDF
-```bash
+```
 $ invoice generate
 ✨ Invoice_1.pdf generated!
 Done!
