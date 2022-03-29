@@ -1,6 +1,6 @@
 import { join } from "path";
 import { readFileSync } from "fs";
-import yaml from "js-yaml";
+import yaml, { YAMLException } from "js-yaml";
 import { Config } from "../types";
 
 const configPath = join(__dirname, "..", "..", "config");
@@ -17,6 +17,10 @@ export const getConfig = () => {
 
     return config;
   } catch (e) {
+    if (e instanceof YAMLException) {
+      throw new Error(`Config file has bad formatting:\n${e.message}`);
+    }
+
     throw new Error("Config file doens't exist. Run invoice init");
   }
 };

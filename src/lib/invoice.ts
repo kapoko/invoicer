@@ -1,9 +1,11 @@
-import { join, basename } from "path";
+import { basename } from "path";
 import { InvoiceData, InvoiceDataItem, VatIndex } from "../types";
 import { getInvoicePaths, readInvoiceData } from "./files";
 import { getConfig } from "../lib/config";
 
-// Generate InvoiceData array from invoice ids
+/**
+ * Generate InvoiceData array from invoice ids
+ */
 export const getInvoices = (invoiceIds: string[] = []) => {
   const invoicePaths = getInvoicePaths(invoiceIds);
   const data = readInvoiceData(invoicePaths);
