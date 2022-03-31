@@ -28,9 +28,11 @@ Commands:
   help [command]                      display help for command
 ```
 
-## Config
-
-Run `invoice init` before first time use to create a new config file.
+## First time use & config
+```
+$ invoice init
+✨ Config created! /path/to/invoicer/config/config.yml
+```
 
 `config/config.yml`
 ```yaml
