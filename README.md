@@ -112,7 +112,7 @@ currency: EUR
   - `p` price (required)
   - `a` amount (optional, default 1), total of this item will be `price` * `amount`
   - `u` unit (optional, default empty), for example `hours` or `pieces`. 
-  - `d` description (optional, default empty), will be rendered below the title. in smaller font. Use `|` for multiline.
+  - `d` description (optional, default empty), will be rendered below the title in smaller font. Use `|` for multiline.
   - `v` vat (optional, default `invoice.defaultVat` from config), can be any other percentage, to allow for different vat percentages on one invoice.
 - `currency` (optional) can be used to set this invoice to another currency than your default currency in config.
 
