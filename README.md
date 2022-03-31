@@ -38,10 +38,11 @@ invoice:
   template: invoice.html    # File to use as template, so you can use your own
   prefix: Invoice_          # Prefix of generated PDFs, followed by the invoice number
   defaultVat: 0.21          # Will apply to any item where no vat is given
+  defaultCurrency: EUR      # Three-letter currency code (see src/currencies.json)
   locale: en-GB             # Applies to date and number formatting on the invoice
   paymentTerm: 14           # In days
-  outDir:                   # Optional absolute path. If empty the local folder
-                            # ./generated will be used
+  outDir:                   # Absolute path where generated PDFs go. If empty the local
+                            # folder ./generated will be used
 
 company:                    # Your commany info
   name:                     
@@ -97,10 +98,13 @@ date: 2030-01-26
 items:
   - t: 
     p: 
+
+# Optional
+currency: EUR
 ```
 
 - `to` must be set to the client's id from the config file. 
-- `date` will be filled automatically. 
+- `date` will be filled automatically with today's date.
 - `items` is a list/array of products for the invoice. Only `t` and `p` are required per item.
   - `t` title (required)
   - `p` price (required)
@@ -108,6 +112,11 @@ items:
   - `u` unit (optional, default empty), for example `hours` or `pieces`. 
   - `d` description (optional, default empty), will be rendered below the title. in smaller font. Use `|` for multiline.
   - `v` vat (optional, default `invoice.defaultVat` from config), can be any other percentage, to allow for different vat percentages on one invoice.
+- `currency` (optional) can be used to set this invoice to another currency than your default currency in config.
+
+#### Optional config
+
+- `currency` can be set to another currency with the three letter currency code.
 
 ### Generate PDF
 ```

@@ -221,8 +221,8 @@
           </td>
 
           <td class="text-right">{{this.amount}} {{this.unit}}</td>
-          <td class="text-right">{{valuta this.price}}</td>
-          <td class="text-right">{{valuta this.total}}</td>
+          <td class="text-right">{{valuta this.price ../currency }}</td>
+          <td class="text-right">{{valuta this.total ../currency }}</td>
         </tr>
         {{/each}}
       </tbody>
@@ -232,12 +232,12 @@
         <tbody>
           <tr>
             <th>Totaal ex. BTW</th>
-            <td>{{valuta subtotal}}</td>
+            <td>{{valuta subtotal currency}}</td>
           </tr>
           {{#each vat}}
           <tr>
             <th>BTW {{percentage @key}}</th>
-            <td>{{valuta this}}</td>
+            <td>{{valuta this ../currency}}</td>
           </tr>
           {{/each}}
           <tr>
@@ -245,14 +245,14 @@
           </tr>
           <tr class="text-lg">
             <th>TOTAAL</th>
-            <td>{{valuta total}}</td>
+            <td>{{valuta total currency}}</td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="flex-end">
       <p class="text-xs width-50 mt-xl text-right">
-        Graag het te betalen bedrag van {{valuta total}} binnen
+        Graag het te betalen bedrag van {{valuta total currency}} binnen
         {{config.invoice.paymentTerm}} dagen na factuurdatum o.v.v.
         factuurnummer {{invoiceNumber}} overmaken naar {{company.iban}} t.n.v.
         {{company.accountHolder}}.

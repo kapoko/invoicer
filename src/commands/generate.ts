@@ -35,36 +35,42 @@ export default async (
 
   let count = 0;
 
-  for await (const invoice of invoices) {
-    const dataBinding = { ...invoice, config };
-    const fileName = `${config.invoice.prefix}${invoice.invoiceNumber}.pdf`;
-    const path = join(getOutputDirectory(), fileName);
+  try {
+    for await (const invoice of invoices) {
+      const dataBinding = { ...invoice, config };
+      const fileName = `${config.invoice.prefix}${invoice.invoiceNumber}.pdf`;
+      const path = join(getOutputDirectory(), fileName);
 
-    // If generated invoice already exists, don't generate it
-    if (!options.force && existsSync(path)) {
-      continue;
+      // If generated invoice already exists, don't generate it
+      if (!options.force && existsSync(path)) {
+        continue;
+      }
+
+      const templateHtml = readFileSync(
+        join(appRoot, "templates", config.invoice.template),
+        "utf8"
+      );
+      const template = handlebars.compile(templateHtml);
+      const finalHtml = encodeURIComponent(template(dataBinding));
+      const pdfOptions = {
+        format: "a4" as PaperFormat,
+        printBackground: true,
+        path,
+      };
+
+      const page = await browser.newPage();
+      await page.goto(`data:text/html;charset=UTF-8,${finalHtml}`, {
+        waitUntil: "networkidle0",
+      });
+      await page.pdf(pdfOptions);
+
+      console.log(`✨ ${fileName} generated!`);
+      count++;
     }
-
-    const templateHtml = readFileSync(
-      join(appRoot, "templates", config.invoice.template),
-      "utf8"
-    );
-    const template = handlebars.compile(templateHtml);
-    const finalHtml = encodeURIComponent(template(dataBinding));
-    const pdfOptions = {
-      format: "a4" as PaperFormat,
-      printBackground: true,
-      path,
-    };
-
-    const page = await browser.newPage();
-    await page.goto(`data:text/html;charset=UTF-8,${finalHtml}`, {
-      waitUntil: "networkidle0",
-    });
-    await page.pdf(pdfOptions);
-
-    console.log(`✨ ${fileName} generated!`);
-    count++;
+  } catch (e) {
+    // Close browser and rethrow
+    await browser.close();
+    throw e;
   }
 
   // Close puppeteer

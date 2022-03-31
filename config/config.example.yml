@@ -2,6 +2,7 @@ invoice:
   template: invoice.html
   prefix: Invoice_
   defaultVat: 0.21
+  defaultCurrency: EUR
   locale: en-GB
   paymentTerm: 14
   outDir:

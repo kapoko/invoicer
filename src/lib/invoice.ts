@@ -10,10 +10,16 @@ export const getInvoices = (invoiceIds: string[] = []) => {
   const invoicePaths = getInvoicePaths(invoiceIds);
   const data = readInvoiceData(invoicePaths);
 
-  const invoices: InvoiceData[] = data.map((inv, index) => {
+  const invoices: InvoiceData[] = data.map((invoiceYaml, index) => {
     // Date
-    const date = inv.date;
-    const { company, clients } = getConfig();
+    const {
+      company,
+      clients,
+      invoice: { defaultCurrency },
+    } = getConfig();
+
+    const date = invoiceYaml.date;
+    const currency = invoiceYaml.currency || defaultCurrency;
 
     // Invoice number, check if filename is a number
     const invoiceNumber = parseInt(basename(invoicePaths[index], ".yml"));
@@ -24,13 +30,13 @@ export const getInvoices = (invoiceIds: string[] = []) => {
     }
 
     // Find client, throw error if it doesn't exist
-    const client = clients.find((c) => c.id === inv.to);
+    const client = clients.find((c) => c.id === invoiceYaml.to);
     if (!client) {
-      throw new Error(`Client with id ${inv.to} doesn't exist`);
+      throw new Error(`Client with id ${invoiceYaml.to} doesn't exist`);
     }
 
     // Transform the data from yaml to more readable data
-    const items: InvoiceDataItem[] = inv.items.map((item) => ({
+    const items: InvoiceDataItem[] = invoiceYaml.items.map((item) => ({
       title: item.t,
       price: item.p,
       amount: item.a || 1,
@@ -58,6 +64,7 @@ export const getInvoices = (invoiceIds: string[] = []) => {
       subtotal,
       total,
       vat,
+      currency,
     };
   });
 

@@ -55,9 +55,7 @@ const getAllInvoiceIds = () => {
 const nextInvoiceNumber = () => {
   const ids = getAllInvoiceIds().map((v) => parseInt(v));
 
-  const max = ids.reduce(function (a, b) {
-    return Math.max(a, b);
-  }, 0);
+  const max = ids.reduce((a, b) => Math.max(a, b), 0);
 
   return max + 1;
 };

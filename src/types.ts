@@ -1,3 +1,5 @@
+import currencies from "./currencies.json";
+
 export type Client = {
   id: number;
   company: string;
@@ -31,9 +33,12 @@ type InvoiceYAMLItem = {
   d?: string;
 };
 
+export type Currency = keyof typeof currencies;
+
 export type InvoiceYAML = {
   to: number;
   date: Date;
+  currency?: Currency;
   items: InvoiceYAMLItem[];
 };
 
@@ -60,6 +65,7 @@ export type InvoiceData = {
   subtotal: number;
   vat: VatIndex;
   total: number;
+  currency: Currency;
 };
 
 export type Config = {
@@ -69,6 +75,7 @@ export type Config = {
     prefix: string;
     template: string;
     defaultVat: number;
+    defaultCurrency: Currency;
     locale: string;
     paymentTerm: number;
     outDir?: string;
