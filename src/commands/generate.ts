@@ -64,7 +64,7 @@ export default async (
       });
       await page.pdf(pdfOptions);
 
-      console.log(`✨ ${fileName} generated!`);
+      console.log(`✨ ${path} generated!`);
       count++;
     }
   } catch (e) {
