@@ -1,7 +1,14 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import { generate, listClients, newInvoice, list, init } from "./commands";
+import {
+  generate,
+  listClients,
+  newInvoice,
+  list,
+  init,
+  getPath,
+} from "./commands";
 const packageJson = require("../package.json");
 
 const program = new Command();
@@ -35,5 +42,10 @@ program
   .description("list clients")
   .option("-c, --csv", "output in .csv format")
   .action(listClients);
+
+program
+  .command("path")
+  .description("output path where invoicer is located")
+  .action(getPath);
 
 program.parse();
