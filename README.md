@@ -45,6 +45,9 @@ invoice:
   paymentTerm: 14           # In days
   outDir:                   # Absolute path where generated PDFs go. If empty the local
                             # folder ./generated will be used
+  onlyGenerateStartingWith: # If filled in only invoices starting with this number will
+                            # be considered. Handy for switching to a new output folder 
+                            # in a new year
 
 company:                    # Your commany info
   name:                     
