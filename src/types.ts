@@ -79,5 +79,6 @@ export type Config = {
     locale: string;
     paymentTerm: number;
     outDir?: string;
+    onlyGenerateStartingWith?: string;
   };
 };

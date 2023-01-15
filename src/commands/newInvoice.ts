@@ -1,4 +1,4 @@
-import { generateNewInvoiceDataFile, nextInvoiceNumber } from "../lib/files";
+import { generateNewInvoiceDataFile } from "../lib/files";
 
 export default () => {
   const path = generateNewInvoiceDataFile();

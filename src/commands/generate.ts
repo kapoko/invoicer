@@ -20,8 +20,12 @@ export default async (
     throw new Error("For safety you can't use force flag on all invoices");
   }
 
-  // Get the invoices, all if them if invoiceIds is empty
-  const invoices = getInvoices(invoiceIds);
+  // Get the invoices, all if them if invoiceIds is empty, filter out which should be excluded
+  const invoices = getInvoices(invoiceIds).filter(
+    (i) =>
+      i.invoiceNumber.toString().slice(0, 2) ==
+      config.invoice.onlyGenerateStartingWith?.toString()
+  );
 
   if (!invoices.length) {
     throw new Error("No invoices found.");

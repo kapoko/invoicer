@@ -6,6 +6,7 @@ invoice:
   locale: en-GB
   paymentTerm: 14
   outDir:
+  onlyGenerateStartingWith:
 
 company:
   name:
