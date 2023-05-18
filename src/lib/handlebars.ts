@@ -22,6 +22,13 @@ handlebars.registerHelper("valuta", (num: number, cur: Currency) => {
   return `${symbol} ${amount}`;
 });
 
+handlebars.registerHelper("greaterThan", (v1, v2, options) => {
+  if (v1 > v2) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
 handlebars.registerHelper("percentage", (num: number) => `${num * 100}%`);
 
 handlebars.registerHelper("formatDate", (date: Date) =>

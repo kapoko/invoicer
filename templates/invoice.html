@@ -179,7 +179,9 @@
       </div>
       <div class="text-right">
         <h1 class="mt-0">
-          FACTUUR <span class="light">|</span> {{invoiceNumber}}
+          {{#greaterThan this.total
+          0}}FACTUUR{{else}}CREDITFACTUUR{{/greaterThan}}
+          <span class="light">|</span> {{invoiceNumber}}
         </h1>
         <p class="text-sm">
           {{company.name}}<br />
@@ -199,7 +201,13 @@
       </div>
     </div>
     <div class="columns mt-lg">
-      <p><b>FACTUUR</b> {{invoiceNumber}}</p>
+      <p>
+        <b>
+          {{#greaterThan this.total
+          0}}FACTUUR{{else}}CREDITFACTUUR{{/greaterThan}}
+        </b>
+        {{invoiceNumber}}
+      </p>
       <p><b>Datum</b> {{formatDate date}}</p>
     </div>
     <table>
