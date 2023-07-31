@@ -25,7 +25,7 @@ const getInvoicePaths = (invoiceIds: string[] = []) => {
     invoiceIds.length
       ? `${appRoot}/invoices/?(${invoiceIds.join("|")}).yml`
       : `${appRoot}/invoices/*.yml`
-  );
+  ).sort();
 
   return files;
 };
