@@ -1,5 +1,5 @@
 import { join, basename } from "path";
-import glob from "glob";
+import { globSync } from "glob";
 import yaml from "js-yaml";
 import { readFileSync, appendFileSync, existsSync } from "fs";
 import { InvoiceYAML } from "../types";
@@ -21,7 +21,7 @@ const getOutputDirectory = () => {
  * @returns array of paths
  */
 const getInvoicePaths = (invoiceIds: string[] = []) => {
-  const files = glob.sync(
+  const files = globSync(
     invoiceIds.length
       ? `${appRoot}/invoices/?(${invoiceIds.join("|")}).yml`
       : `${appRoot}/invoices/*.yml`
