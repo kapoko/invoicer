@@ -1,28 +1,28 @@
 {
-  "name": "lil-invoicer",
-  "version": "1.0.0",
-  "description": "Littlest invoice tool for the command line.",
-  "main": "dist/index.js",
-  "scripts": {
-    "start": "tsc --watch",
-    "build": "tsc",
-    "prepare": "tsc && chmod +x dist/index.js"
-  },
-  "keywords": [],
-  "author": "Kasper Koman",
-  "license": "ISC",
-  "dependencies": {
-    "commander": "^11.0.0",
-    "glob": "^10.3.3",
-    "handlebars": "^4.7.7",
-    "js-yaml": "^4.1.0",
-    "puppeteer": "^20.9.0"
-  },
-  "bin": {
-    "invoice": "dist/index.js"
-  },
-  "devDependencies": {
-    "@types/js-yaml": "^4.0.5",
-    "typescript": "^5.1.6"
-  }
+    "name": "lil-invoicer",
+    "version": "1.0.0",
+    "description": "Littlest invoice tool for the command line.",
+    "main": "dist/index.js",
+    "scripts": {
+        "start": "tsc --watch",
+        "build": "tsc",
+        "prepare": "tsc && chmod +x dist/index.js"
+    },
+    "keywords": [],
+    "author": "Kasper Koman",
+    "license": "ISC",
+    "dependencies": {
+        "commander": "^12.1.0",
+        "glob": "^11.0.0",
+        "handlebars": "^4.7.8",
+        "js-yaml": "^4.1.0",
+        "puppeteer": "^23.4.1"
+    },
+    "bin": {
+        "invoice": "dist/index.js"
+    },
+    "devDependencies": {
+        "@types/js-yaml": "^4.0.9",
+        "typescript": "^5.6.2"
+    }
 }
