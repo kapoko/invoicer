@@ -1,28 +1,37 @@
 {
-    "name": "lil-invoicer",
-    "version": "1.0.0",
-    "description": "Littlest invoice tool for the command line.",
-    "main": "dist/index.js",
-    "scripts": {
-        "start": "tsc --watch",
-        "build": "tsc",
-        "prepare": "tsc && chmod +x dist/index.js"
-    },
-    "keywords": [],
-    "author": "Kasper Koman",
-    "license": "ISC",
-    "dependencies": {
-        "commander": "^14.0.0",
-        "glob": "^11.0.3",
-        "handlebars": "^4.7.8",
-        "js-yaml": "^4.1.0",
-        "puppeteer": "^24.15.0"
-    },
-    "bin": {
-        "invoice": "dist/index.js"
-    },
-    "devDependencies": {
-        "@types/js-yaml": "^4.0.9",
-        "typescript": "^5.8.3"
-    }
+  "name": "lil-invoicer",
+  "version": "1.0.0",
+  "description": "Littlest invoice tool for the command line.",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome lint",
+    "lint:write": "biome lint --write",
+    "format": "biome format .",
+    "format:write": "biome format --write .",
+    "pretest": "npm run build",
+    "test": "node --test \"test/**/*.test.mjs\"",
+    "build": "tsc",
+    "prepare": "lefthook install && tsc && chmod +x dist/index.js"
+  },
+  "keywords": [],
+  "author": "Kasper Koman",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^14.0.3",
+    "glob": "^13.0.6",
+    "handlebars": "^4.7.9",
+    "js-yaml": "^4.1.1",
+    "puppeteer": "^24.40.0"
+  },
+  "bin": {
+    "invoice": "dist/index.js"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.12",
+    "@types/js-yaml": "^4.0.9",
+    "lefthook": "^2.1.5",
+    "typescript": "^6.0.2"
+  }
 }

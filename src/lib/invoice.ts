@@ -1,5 +1,5 @@
-import { basename } from "path";
-import { InvoiceData, InvoiceDataItem, VatIndex } from "../types";
+import { basename } from "node:path";
+import type { InvoiceData, InvoiceDataItem, VatIndex } from "../types";
 import { getInvoicePaths, readInvoiceData } from "./files";
 import { getConfig } from "../lib/config";
 
@@ -22,10 +22,10 @@ export const getInvoices = (invoiceIds: string[] = []) => {
     const currency = invoiceYaml.currency || defaultCurrency;
 
     // Invoice number, check if filename is a number
-    const invoiceNumber = parseInt(basename(invoicePaths[index], ".yml"));
-    if (isNaN(invoiceNumber)) {
+    const invoiceNumber = parseInt(basename(invoicePaths[index], ".yml"), 10);
+    if (Number.isNaN(invoiceNumber)) {
       throw new Error(
-        `Invoice file ${basename(invoicePaths[index])} is not numeric.`
+        `Invoice file ${basename(invoicePaths[index])} is not numeric.`,
       );
     }
 
@@ -50,8 +50,9 @@ export const getInvoices = (invoiceIds: string[] = []) => {
     const subtotal = items.reduce((cur, v) => cur + v.total, 0);
     const vat = items.reduce((cur, v) => {
       // Here we count the total amount of tax separated by vat percentage as the keys
-      const { vat, total } = v;
-      return { ...cur, [vat]: (cur[vat] || 0) + total * vat };
+      const { vat: taxRate, total } = v;
+      cur[taxRate] = (cur[taxRate] || 0) + total * taxRate;
+      return cur;
     }, {} as VatIndex);
     const total = subtotal + Object.values(vat).reduce((a, b) => a + b);
 

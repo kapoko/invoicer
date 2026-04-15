@@ -1,0 +1,6 @@
+pre-commit:
+  jobs:
+    - name: Format
+      run: npm run format
+    - name: Lint
+      run: npm run lint

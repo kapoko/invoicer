@@ -1,9 +1,10 @@
 export const withErrorHandling =
-  <T>(fn: Function) =>
-  async (...args: T[]) => {
+  <TArgs extends unknown[], TResult>(
+    fn: (...args: TArgs) => TResult | Promise<TResult>,
+  ) =>
+  async (...args: TArgs): Promise<TResult | undefined> => {
     try {
-      const res = await fn(...args);
-      return res;
+      return await fn(...args);
     } catch (e) {
       if (e instanceof Error) {
         console.error(`❗ ${e.message}`);

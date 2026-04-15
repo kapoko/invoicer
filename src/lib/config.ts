@@ -1,7 +1,7 @@
-import { join } from "path";
-import { readFileSync } from "fs";
+import { join } from "node:path";
+import { readFileSync } from "node:fs";
 import yaml, { YAMLException } from "js-yaml";
-import { Config } from "../types";
+import type { Config } from "../types";
 
 const configPath = join(__dirname, "..", "..", "config");
 
@@ -12,7 +12,7 @@ export const getConfig = () => {
 
   try {
     config = yaml.load(
-      readFileSync(join(configPath, "config.yml"), "utf8")
+      readFileSync(join(configPath, "config.yml"), "utf8"),
     ) as Config;
 
     return config;

@@ -1,8 +1,8 @@
-import { join, basename } from "path";
+import { join, basename } from "node:path";
 import { globSync } from "glob";
 import yaml from "js-yaml";
-import { readFileSync, appendFileSync, existsSync } from "fs";
-import { InvoiceYAML } from "../types";
+import { readFileSync, appendFileSync, existsSync } from "node:fs";
+import type { InvoiceYAML } from "../types";
 import handlebars from "./handlebars";
 import { getConfig } from "./config";
 
@@ -24,7 +24,7 @@ const getInvoicePaths = (invoiceIds: string[] = []) => {
   const files = globSync(
     invoiceIds.length
       ? `${appRoot}/invoices/?(${invoiceIds.join("|")}).yml`
-      : `${appRoot}/invoices/*.yml`
+      : `${appRoot}/invoices/*.yml`,
   ).sort();
 
   return files;
@@ -35,7 +35,7 @@ const getInvoicePaths = (invoiceIds: string[] = []) => {
  */
 const readInvoiceData = (filePaths: string[]) => {
   const data = filePaths.map(
-    (f) => yaml.load(readFileSync(f, "utf8")) as InvoiceYAML
+    (f) => yaml.load(readFileSync(f, "utf8")) as InvoiceYAML,
   );
 
   return data;
@@ -53,7 +53,7 @@ const getAllInvoiceIds = () => {
  * Finds the highest invoice number and returns the next one
  */
 const nextInvoiceNumber = () => {
-  const ids = getAllInvoiceIds().map((v) => parseInt(v));
+  const ids = getAllInvoiceIds().map((v) => parseInt(v, 10));
 
   const max = ids.reduce((a, b) => Math.max(a, b), 0);
 
@@ -66,7 +66,7 @@ const nextInvoiceNumber = () => {
 const generateNewInvoiceDataFile = () => {
   const templateYaml = readFileSync(
     join(appRoot, "templates", "invoice.yml"),
-    "utf8"
+    "utf8",
   );
 
   const template = handlebars.compile(templateYaml);
@@ -76,7 +76,7 @@ const generateNewInvoiceDataFile = () => {
     date: new Date().toISOString().substring(0, 10),
   });
 
-  const path = join(appRoot, "invoices", nextInvoiceNumber() + ".yml");
+  const path = join(appRoot, "invoices", `${nextInvoiceNumber()}.yml`);
   appendFileSync(path, generatedYaml);
 
   return path;
@@ -91,7 +91,7 @@ const copyConfigExample = () => {
 
   const configExampleYaml = readFileSync(
     join(appRoot, "config", "config.example.yml"),
-    "utf8"
+    "utf8",
   );
 
   appendFileSync(path, configExampleYaml);

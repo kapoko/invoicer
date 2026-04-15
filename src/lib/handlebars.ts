@@ -1,7 +1,7 @@
 import handlebars from "handlebars";
 import { getConfig } from "./config";
 import currencies from "../currencies.json";
-import { Currency } from "../types";
+import type { Currency } from "../types";
 
 handlebars.registerHelper("valuta", (num: number, cur: Currency) => {
   const { locale, defaultCurrency } = getConfig().invoice;
@@ -32,7 +32,7 @@ handlebars.registerHelper("greaterThan", (v1, v2, options) => {
 handlebars.registerHelper("percentage", (num: number) => `${num * 100}%`);
 
 handlebars.registerHelper("formatDate", (date: Date) =>
-  date.toLocaleDateString(getConfig().invoice.locale)
+  date.toLocaleDateString(getConfig().invoice.locale),
 );
 
 export default handlebars;

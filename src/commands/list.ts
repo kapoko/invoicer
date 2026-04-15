@@ -17,7 +17,7 @@ export default () => {
     const dateLocal = date.toLocaleDateString(locale);
 
     // If an invoice contains multiple vat values, log a line for each
-    for (let v of Object.keys(vat)) {
+    for (const v of Object.keys(vat)) {
       // Subtotal for this vat
       const vat = parseFloat(v);
       const subtotal = items
@@ -25,7 +25,7 @@ export default () => {
         .reduce((sum, item) => sum + item.total, 0)
         .toLocaleString(locale);
 
-      let info = [
+      const info = [
         invoiceNumber,
         dateLocal,
         company,

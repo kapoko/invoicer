@@ -1,4 +1,4 @@
-import currencies from "./currencies.json";
+import type currencies from "./currencies.json";
 
 export type Client = {
   id: number;
