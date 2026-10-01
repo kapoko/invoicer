@@ -21,10 +21,9 @@ export default async (
   }
 
   // Get the invoices, all if them if invoiceIds is empty, filter out which should be excluded
+  const prefix = config.invoice.onlyGenerateStartingWith?.toString();
   const invoices = getInvoices(invoiceIds).filter(
-    (i) =>
-      i.invoiceNumber.toString().slice(0, 2) ===
-      config.invoice.onlyGenerateStartingWith?.toString(),
+    (invoice) => !prefix || invoice.invoiceNumber.toString().startsWith(prefix),
   );
 
   if (!invoices.length) {
