@@ -8,8 +8,8 @@ import {
   list,
   init,
   getPath,
-} from "./commands";
-import packageJson from "../package.json";
+} from "./commands/index.js";
+import packageJson from "../package.json" with { type: "json" };
 
 const program = new Command();
 

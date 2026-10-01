@@ -2,7 +2,11 @@
   "name": "lil-invoicer",
   "version": "1.0.0",
   "description": "Littlest invoice tool for the command line.",
+  "type": "module",
   "main": "dist/index.js",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "start": "tsc --watch",
     "typecheck": "tsc --noEmit",

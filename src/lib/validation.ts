@@ -1,5 +1,5 @@
-import currencies from "../currencies.json";
-import type { Config, InvoiceYAML } from "../types";
+import currencies from "../currencies.json" with { type: "json" };
+import type { Config, InvoiceYAML } from "../types.js";
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null && !Array.isArray(value);

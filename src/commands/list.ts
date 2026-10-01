@@ -1,5 +1,5 @@
-import { getInvoices } from "../lib/invoice";
-import { getConfig } from "../lib/config";
+import { getInvoices } from "../lib/invoice.js";
+import { getConfig } from "../lib/config.js";
 
 export default () => {
   const invoices = getInvoices();

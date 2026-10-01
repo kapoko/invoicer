@@ -1,7 +1,8 @@
 import { homedir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const appRoot = join(__dirname, "..", "..");
+const appRoot = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
 export const getAppRoot = () => appRoot;
 

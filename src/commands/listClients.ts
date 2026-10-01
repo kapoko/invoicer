@@ -1,6 +1,6 @@
-import { getConfig } from "../lib/config";
-import { getInvoices } from "../lib/invoice";
-import type { InvoiceData } from "../types";
+import { getConfig } from "../lib/config.js";
+import { getInvoices } from "../lib/invoice.js";
+import type { InvoiceData } from "../types.js";
 
 export default (options: { csv: boolean | undefined }) => {
   const invoices = getInvoices();

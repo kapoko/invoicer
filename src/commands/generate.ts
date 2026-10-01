@@ -1,11 +1,11 @@
 import { readFileSync, existsSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import puppeteer, { type PaperFormat } from "puppeteer";
-import handlebars from "../lib/handlebars";
-import { getConfig } from "../lib/config";
-import { getOutputDirectory } from "../lib/files";
-import { getInvoices } from "../lib/invoice";
-import { getAppRoot } from "../lib/paths";
+import handlebars from "../lib/handlebars.js";
+import { getConfig } from "../lib/config.js";
+import { getOutputDirectory } from "../lib/files.js";
+import { getInvoices } from "../lib/invoice.js";
+import { getAppRoot } from "../lib/paths.js";
 
 const renderTimeout = 30_000;
 

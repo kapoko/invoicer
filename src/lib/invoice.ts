@@ -1,7 +1,7 @@
 import { basename } from "node:path";
-import type { InvoiceData, InvoiceDataItem, VatIndex } from "../types";
-import { getInvoicePaths, readInvoiceData } from "./files";
-import { getConfig } from "../lib/config";
+import type { InvoiceData, InvoiceDataItem, VatIndex } from "../types.js";
+import { getInvoicePaths, readInvoiceData } from "./files.js";
+import { getConfig } from "./config.js";
 
 /**
  * Generate InvoiceData array from invoice ids

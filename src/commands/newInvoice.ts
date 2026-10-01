@@ -1,5 +1,5 @@
-import { generateNewInvoiceDataFile } from "../lib/files";
-import { getConfig } from "../lib/config";
+import { generateNewInvoiceDataFile } from "../lib/files.js";
+import { getConfig } from "../lib/config.js";
 
 export default (clientId?: string) => {
   let clientIdNumber: number | undefined;

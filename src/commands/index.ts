@@ -1,10 +1,10 @@
-import listClientsCommand from "./listClients";
-import generateCommand from "./generate";
-import newInvoiceCommand from "./newInvoice";
-import listCommand from "./list";
-import initCommand from "./init";
-import getPathCommand from "./getPath";
-import { withErrorHandling } from "../lib/errorHandler";
+import listClientsCommand from "./listClients.js";
+import generateCommand from "./generate.js";
+import newInvoiceCommand from "./newInvoice.js";
+import listCommand from "./list.js";
+import initCommand from "./init.js";
+import getPathCommand from "./getPath.js";
+import { withErrorHandling } from "../lib/errorHandler.js";
 
 export const listClients = withErrorHandling(listClientsCommand);
 export const generate = withErrorHandling(generateCommand);

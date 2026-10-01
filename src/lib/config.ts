@@ -1,9 +1,10 @@
 import { join } from "node:path";
 import { readFileSync } from "node:fs";
-import yaml, { YAMLException } from "js-yaml";
-import type { Config } from "../types";
-import { validateConfig } from "./validation";
-import { getDataDirectory } from "./paths";
+import * as yaml from "js-yaml";
+import { YAMLException } from "js-yaml";
+import type { Config } from "../types.js";
+import { validateConfig } from "./validation.js";
+import { getDataDirectory } from "./paths.js";
 
 let config: Config | undefined;
 

@@ -1,4 +1,4 @@
-import { copyConfigExample } from "../lib/files";
+import { copyConfigExample } from "../lib/files.js";
 
 export default () => {
   const path = copyConfigExample();

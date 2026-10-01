@@ -1,6 +1,6 @@
 import { join, basename } from "node:path";
 import { globSync } from "glob";
-import yaml from "js-yaml";
+import * as yaml from "js-yaml";
 import {
   readFileSync,
   copyFileSync,
@@ -9,15 +9,15 @@ import {
   mkdirSync,
   writeFileSync,
 } from "node:fs";
-import handlebars from "./handlebars";
-import { getConfig } from "./config";
-import { validateInvoice } from "./validation";
+import handlebars from "./handlebars.js";
+import { getConfig } from "./config.js";
+import { validateInvoice } from "./validation.js";
 import {
   getAppRoot,
   getDataDirectory,
   getGeneratedDirectory,
   getInvoicesDirectory,
-} from "./paths";
+} from "./paths.js";
 
 /**
  * Get output dir

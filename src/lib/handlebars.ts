@@ -1,7 +1,7 @@
 import handlebars from "handlebars";
-import { getConfig } from "./config";
-import currencies from "../currencies.json";
-import type { Currency } from "../types";
+import { getConfig } from "./config.js";
+import currencies from "../currencies.json" with { type: "json" };
+import type { Currency } from "../types.js";
 
 handlebars.registerHelper("valuta", (num: number, cur: Currency) => {
   const { locale, defaultCurrency } = getConfig().invoice;

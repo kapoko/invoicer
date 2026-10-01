@@ -4,6 +4,8 @@ Lil' invoicer is a command line tool for creating invoices. It generates high-qu
 
 ## Installation
 
+Requires Node.js 22.12.0 or later.
+
 Clone and run `npm install && npm link`.
 
 Run `invoice init` and fill in your config. Your config, invoices, and generated PDFs are stored in your platform data directory. Set `LIL_INVOICER_DATA_DIR` to use a project-specific directory instead. `invoice path` prints the active data directory. On upgrade, `invoice init` migrates data from the legacy installation directory.
