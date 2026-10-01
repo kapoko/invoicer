@@ -90,11 +90,12 @@ All this data can be accessed in the html template i.e. by using `{{config.invoi
 ### Generate new invoice data file
 
 ```
-$ invoice new
+$ invoice new [clientId]
 ✨ New invoice created! /path/to/invoicer/invoices/1.yml
 ```
 
 The filename will be the invoice number. To start at another number change the filename accordingly. `invoice new` will automatically increment from the highest invoice number it can find.
+Pass a configured client ID, such as `invoice new 23`, to pre-fill the invoice's `to` field.
 
 ### Fill in the data
 

@@ -30,6 +30,7 @@ program
 program
   .command("new")
   .description("create new invoice data file")
+  .argument("[clientId]", "client ID to assign to the invoice")
   .action(newInvoice);
 
 program

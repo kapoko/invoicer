@@ -63,7 +63,7 @@ const nextInvoiceNumber = () => {
 /**
  * @returns File path of the newly created invoice
  */
-const generateNewInvoiceDataFile = () => {
+const generateNewInvoiceDataFile = (clientId?: number) => {
   const templateYaml = readFileSync(
     join(appRoot, "templates", "invoice.yml"),
     "utf8",
@@ -74,6 +74,7 @@ const generateNewInvoiceDataFile = () => {
   // Fill in date of today
   const generatedYaml = template({
     date: new Date().toISOString().substring(0, 10),
+    clientId,
   });
 
   const path = join(appRoot, "invoices", `${nextInvoiceNumber()}.yml`);
