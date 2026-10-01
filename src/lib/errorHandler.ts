@@ -6,6 +6,8 @@ export const withErrorHandling =
     try {
       return await fn(...args);
     } catch (e) {
+      process.exitCode = 1;
+
       if (e instanceof Error) {
         console.error(`❗ ${e.message}`);
       } else {
