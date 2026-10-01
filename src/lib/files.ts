@@ -3,11 +3,11 @@ import { globSync } from "glob";
 import yaml from "js-yaml";
 import {
   readFileSync,
-  appendFileSync,
   copyFileSync,
   cpSync,
   existsSync,
   mkdirSync,
+  writeFileSync,
 } from "node:fs";
 import handlebars from "./handlebars";
 import { getConfig } from "./config";
@@ -33,13 +33,18 @@ const getOutputDirectory = () => {
  * @returns array of paths
  */
 const getInvoicePaths = (invoiceIds: string[] = []) => {
-  const files = globSync(
-    invoiceIds.length
-      ? `${getInvoicesDirectory()}/?(${invoiceIds.join("|")}).yml`
-      : `${getInvoicesDirectory()}/*.yml`,
-  ).sort();
+  if (invoiceIds.length) {
+    return invoiceIds.flatMap((invoiceId) => {
+      if (!/^[1-9]\d*$/.test(invoiceId)) {
+        throw new Error(`Invoice ID must be a positive integer: ${invoiceId}`);
+      }
 
-  return files;
+      const path = join(getInvoicesDirectory(), `${invoiceId}.yml`);
+      return existsSync(path) ? [path] : [];
+    });
+  }
+
+  return globSync(`${getInvoicesDirectory()}/*.yml`).sort();
 };
 
 /**
@@ -90,10 +95,22 @@ const generateNewInvoiceDataFile = (clientId?: number) => {
   });
 
   mkdirSync(getInvoicesDirectory(), { recursive: true });
-  const path = join(getInvoicesDirectory(), `${nextInvoiceNumber()}.yml`);
-  appendFileSync(path, generatedYaml);
+  let invoiceNumber = nextInvoiceNumber();
 
-  return path;
+  while (true) {
+    const path = join(getInvoicesDirectory(), `${invoiceNumber}.yml`);
+
+    try {
+      writeFileSync(path, generatedYaml, { flag: "wx" });
+      return path;
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "EEXIST") {
+        throw error;
+      }
+
+      invoiceNumber++;
+    }
+  }
 };
 
 const copyConfigExample = () => {
@@ -128,7 +145,7 @@ const copyConfigExample = () => {
     "utf8",
   );
 
-  appendFileSync(path, configExampleYaml);
+  writeFileSync(path, configExampleYaml, { flag: "wx" });
 
   return path;
 };
