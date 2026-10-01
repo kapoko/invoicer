@@ -7,6 +7,8 @@ import { getOutputDirectory } from "../lib/files";
 import { getInvoices } from "../lib/invoice";
 import { getAppRoot } from "../lib/paths";
 
+const renderTimeout = 30_000;
+
 export default async (
   invoiceIds: string[],
   options: {
@@ -59,11 +61,13 @@ export default async (
         format: "a4" as PaperFormat,
         printBackground: true,
         path,
+        timeout: renderTimeout,
       };
 
       const page = await browser.newPage();
       await page.goto(`data:text/html;charset=UTF-8,${finalHtml}`, {
         waitUntil: "networkidle0",
+        timeout: renderTimeout,
       });
       await page.pdf(pdfOptions);
 
