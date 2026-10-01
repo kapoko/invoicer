@@ -2,9 +2,9 @@ import { join, basename } from "node:path";
 import { globSync } from "glob";
 import yaml from "js-yaml";
 import { readFileSync, appendFileSync, existsSync } from "node:fs";
-import type { InvoiceYAML } from "../types";
 import handlebars from "./handlebars";
 import { getConfig } from "./config";
+import { validateInvoice } from "./validation";
 
 const appRoot = join(__dirname, "..", "..");
 
@@ -34,8 +34,8 @@ const getInvoicePaths = (invoiceIds: string[] = []) => {
  * Reads the data from yaml files
  */
 const readInvoiceData = (filePaths: string[]) => {
-  const data = filePaths.map(
-    (f) => yaml.load(readFileSync(f, "utf8")) as InvoiceYAML,
+  const data = filePaths.map((path) =>
+    validateInvoice(yaml.load(readFileSync(path, "utf8")), basename(path)),
   );
 
   return data;
