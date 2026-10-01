@@ -37,7 +37,7 @@ export type Currency = keyof typeof currencies;
 
 export type InvoiceYAML = {
   to: number;
-  date: Date;
+  date: string | Date;
   currency?: Currency;
   items: InvoiceYAMLItem[];
 };

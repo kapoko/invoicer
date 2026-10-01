@@ -18,7 +18,15 @@ export const getInvoices = (invoiceIds: string[] = []) => {
       invoice: { defaultCurrency },
     } = getConfig();
 
-    const date = invoiceYaml.date;
+    const date =
+      invoiceYaml.date instanceof Date
+        ? invoiceYaml.date
+        : new Date(`${invoiceYaml.date}T00:00:00`);
+    if (Number.isNaN(date.getTime())) {
+      throw new Error(
+        `Invoice ${basename(invoicePaths[index])} has an invalid date: ${invoiceYaml.date}`,
+      );
+    }
     const currency = invoiceYaml.currency || defaultCurrency;
 
     // Invoice number, check if filename is a number
