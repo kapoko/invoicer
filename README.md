@@ -6,7 +6,7 @@ Lil' invoicer is a command line tool for creating invoices. It generates high-qu
 
 Clone and run `npm install && npm link`.
 
-Run `invoice init` and fill in your config.
+Run `invoice init` and fill in your config. Your config, invoices, and generated PDFs are stored in your platform data directory. Set `LIL_INVOICER_DATA_DIR` to use a project-specific directory instead. `invoice path` prints the active data directory. On upgrade, `invoice init` migrates data from the legacy installation directory.
 
 ## Usage
 
@@ -32,7 +32,7 @@ Commands:
 
 ```
 $ invoice init
-✨ Config created! /path/to/invoicer/config/config.yml
+✨ Config created! /path/to/lil-invoicer/config/config.yml
 ```
 
 `config/config.yml`
@@ -91,7 +91,7 @@ All this data can be accessed in the html template i.e. by using `{{config.invoi
 
 ```
 $ invoice new [clientId]
-✨ New invoice created! /path/to/invoicer/invoices/1.yml
+✨ New invoice created! /path/to/lil-invoicer/invoices/1.yml
 ```
 
 The filename will be the invoice number. To start at another number change the filename accordingly. `invoice new` will automatically increment from the highest invoice number it can find.

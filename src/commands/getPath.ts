@@ -1,7 +1,5 @@
-import { join } from "node:path";
+import { getDataDirectory } from "../lib/paths";
 
 export default () => {
-  const appDir = join(__dirname, "../../");
-
-  console.log(appDir);
+  console.log(getDataDirectory());
 };

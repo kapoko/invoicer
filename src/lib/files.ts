@@ -1,19 +1,31 @@
 import { join, basename } from "node:path";
 import { globSync } from "glob";
 import yaml from "js-yaml";
-import { readFileSync, appendFileSync, existsSync } from "node:fs";
+import {
+  readFileSync,
+  appendFileSync,
+  copyFileSync,
+  cpSync,
+  existsSync,
+  mkdirSync,
+} from "node:fs";
 import handlebars from "./handlebars";
 import { getConfig } from "./config";
 import { validateInvoice } from "./validation";
-
-const appRoot = join(__dirname, "..", "..");
+import {
+  getAppRoot,
+  getConfigDirectory,
+  getDataDirectory,
+  getGeneratedDirectory,
+  getInvoicesDirectory,
+} from "./paths";
 
 /**
  * Get output dir
  */
 const getOutputDirectory = () => {
   const { outDir } = getConfig().invoice;
-  return outDir ? outDir : join(appRoot, "generated");
+  return outDir ? outDir : getGeneratedDirectory();
 };
 
 /**
@@ -23,8 +35,8 @@ const getOutputDirectory = () => {
 const getInvoicePaths = (invoiceIds: string[] = []) => {
   const files = globSync(
     invoiceIds.length
-      ? `${appRoot}/invoices/?(${invoiceIds.join("|")}).yml`
-      : `${appRoot}/invoices/*.yml`,
+      ? `${getInvoicesDirectory()}/?(${invoiceIds.join("|")}).yml`
+      : `${getInvoicesDirectory()}/*.yml`,
   ).sort();
 
   return files;
@@ -65,7 +77,7 @@ const nextInvoiceNumber = () => {
  */
 const generateNewInvoiceDataFile = (clientId?: number) => {
   const templateYaml = readFileSync(
-    join(appRoot, "templates", "invoice.yml"),
+    join(getAppRoot(), "templates", "invoice.yml"),
     "utf8",
   );
 
@@ -77,21 +89,42 @@ const generateNewInvoiceDataFile = (clientId?: number) => {
     clientId,
   });
 
-  const path = join(appRoot, "invoices", `${nextInvoiceNumber()}.yml`);
+  mkdirSync(getInvoicesDirectory(), { recursive: true });
+  const path = join(getInvoicesDirectory(), `${nextInvoiceNumber()}.yml`);
   appendFileSync(path, generatedYaml);
 
   return path;
 };
 
 const copyConfigExample = () => {
-  const path = join(appRoot, "config", "config.yml");
+  const path = join(getConfigDirectory(), "config.yml");
 
   if (existsSync(path)) {
     throw new Error("Config file config.yml already exists.");
   }
 
+  mkdirSync(getConfigDirectory(), { recursive: true });
+
+  const legacyDirectory = getAppRoot();
+  const legacyConfigPath = join(legacyDirectory, "config", "config.yml");
+  if (existsSync(legacyConfigPath)) {
+    copyFileSync(legacyConfigPath, path);
+
+    for (const directory of ["invoices", "generated"]) {
+      const legacyPath = join(legacyDirectory, directory);
+      if (existsSync(legacyPath)) {
+        cpSync(legacyPath, join(getDataDirectory(), directory), {
+          recursive: true,
+          errorOnExist: true,
+        });
+      }
+    }
+
+    return path;
+  }
+
   const configExampleYaml = readFileSync(
-    join(appRoot, "config", "config.example.yml"),
+    join(getAppRoot(), "config", "config.example.yml"),
     "utf8",
   );
 

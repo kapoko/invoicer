@@ -3,8 +3,7 @@ import { readFileSync } from "node:fs";
 import yaml, { YAMLException } from "js-yaml";
 import type { Config } from "../types";
 import { validateConfig } from "./validation";
-
-const configPath = join(__dirname, "..", "..", "config");
+import { getConfigDirectory } from "./paths";
 
 let config: Config | undefined;
 
@@ -13,7 +12,7 @@ export const getConfig = () => {
 
   try {
     config = validateConfig(
-      yaml.load(readFileSync(join(configPath, "config.yml"), "utf8")),
+      yaml.load(readFileSync(join(getConfigDirectory(), "config.yml"), "utf8")),
     );
 
     return config;
@@ -22,6 +21,6 @@ export const getConfig = () => {
       throw new Error(`Config file has bad formatting:\n${e.message}`);
     }
 
-    throw new Error("Config file doens't exist. Run invoice init");
+    throw new Error("Config file doesn't exist. Run invoice init");
   }
 };

@@ -1,12 +1,11 @@
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import puppeteer, { type PaperFormat } from "puppeteer";
 import handlebars from "../lib/handlebars";
 import { getConfig } from "../lib/config";
 import { getOutputDirectory } from "../lib/files";
 import { getInvoices } from "../lib/invoice";
-
-const appRoot = join(__dirname, "..", "..");
+import { getAppRoot } from "../lib/paths";
 
 export default async (
   invoiceIds: string[],
@@ -49,8 +48,10 @@ export default async (
         continue;
       }
 
+      mkdirSync(getOutputDirectory(), { recursive: true });
+
       const templateHtml = readFileSync(
-        join(appRoot, "templates", config.invoice.template),
+        join(getAppRoot(), "templates", config.invoice.template),
         "utf8",
       );
       const template = handlebars.compile(templateHtml);
