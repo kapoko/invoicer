@@ -19,19 +19,20 @@
   "author": "Kasper Koman",
   "license": "ISC",
   "dependencies": {
-    "commander": "^14.0.3",
+    "commander": "^15.0.0",
     "glob": "^13.0.6",
     "handlebars": "^4.7.9",
-    "js-yaml": "^4.1.1",
-    "puppeteer": "^24.40.0"
+    "js-yaml": "^5.4.2",
+    "puppeteer": "^25.12.0"
   },
   "bin": {
     "invoice": "dist/index.js"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.12",
+    "@biomejs/biome": "^2.5.15",
     "@types/js-yaml": "^4.0.9",
-    "lefthook": "^2.1.5",
-    "typescript": "^6.0.2"
+    "@types/node": "^26.6.3",
+    "lefthook": "^2.1.15",
+    "typescript": "^7.0.2"
   }
 }
