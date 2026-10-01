@@ -31,7 +31,6 @@ export default async (
 
   // Launch puppeteer
   const browser = await puppeteer.launch({
-    args: ["--no-sandbox"],
     headless: true,
   });
 
