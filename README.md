@@ -32,10 +32,10 @@ Commands:
 
 ```
 $ invoice init
-✨ Config created! /path/to/lil-invoicer/config/config.yml
+✨ Config created! /path/to/lil-invoicer/config.yml
 ```
 
-`config/config.yml`
+`config.yml`
 
 ```yaml
 invoice:

@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import yaml, { YAMLException } from "js-yaml";
 import type { Config } from "../types";
 import { validateConfig } from "./validation";
-import { getConfigDirectory } from "./paths";
+import { getDataDirectory } from "./paths";
 
 let config: Config | undefined;
 
@@ -12,7 +12,7 @@ export const getConfig = () => {
 
   try {
     config = validateConfig(
-      yaml.load(readFileSync(join(getConfigDirectory(), "config.yml"), "utf8")),
+      yaml.load(readFileSync(join(getDataDirectory(), "config.yml"), "utf8")),
     );
 
     return config;

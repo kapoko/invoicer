@@ -14,7 +14,6 @@ import { getConfig } from "./config";
 import { validateInvoice } from "./validation";
 import {
   getAppRoot,
-  getConfigDirectory,
   getDataDirectory,
   getGeneratedDirectory,
   getInvoicesDirectory,
@@ -114,13 +113,19 @@ const generateNewInvoiceDataFile = (clientId?: number) => {
 };
 
 const copyConfigExample = () => {
-  const path = join(getConfigDirectory(), "config.yml");
+  const path = join(getDataDirectory(), "config.yml");
 
   if (existsSync(path)) {
     throw new Error("Config file config.yml already exists.");
   }
 
-  mkdirSync(getConfigDirectory(), { recursive: true });
+  mkdirSync(getDataDirectory(), { recursive: true });
+
+  const previousConfigPath = join(getDataDirectory(), "config", "config.yml");
+  if (existsSync(previousConfigPath)) {
+    copyFileSync(previousConfigPath, path);
+    return path;
+  }
 
   const legacyDirectory = getAppRoot();
   const legacyConfigPath = join(legacyDirectory, "config", "config.yml");

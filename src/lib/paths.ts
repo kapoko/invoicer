@@ -25,7 +25,6 @@ export const getDataDirectory = () => {
   );
 };
 
-export const getConfigDirectory = () => join(getDataDirectory(), "config");
 export const getInvoicesDirectory = () => join(getDataDirectory(), "invoices");
 export const getGeneratedDirectory = () =>
   join(getDataDirectory(), "generated");
