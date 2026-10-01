@@ -70,14 +70,9 @@ export default async (
       console.log(`✨ ${path} generated!`);
       count++;
     }
-  } catch (e) {
-    // Close browser and rethrow
+  } finally {
     await browser.close();
-    throw e;
   }
-
-  // Close puppeteer
-  await browser.close();
 
   // Result message
   const existing = invoices.length - count;
